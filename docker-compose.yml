@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  app:
+    container_name: backend
+    build: .
+    command: yarn start
+    ports: 
+     - "3060:3060"
+    links:
+      - database
+    depends_on:
+      - database
+
+    volumes: 
+     - .:/usr/app
+    networks:
+    - app-network
+
+  database:
+    container_name: database
+    image: postgres
+    ports:
+      - '5432:5432'
+    restart: always  
+    volumes:
+      - /home/douglasfm/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "1234"
+      POSTGRES_DATABASE: market
+      POSTGRES_USER: postgres
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
