@@ -38,12 +38,4 @@ const listCompanys = async function (req: Request, res: Response) {
   }
 };
 
-// const refreshToken = async function (req: Request, res: Response) {
-//   try {
-//     
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
 export { createCompany, listCompanys };

@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const generateRefreshToken = async function (companyId: number) {
   try {
-    const expiresIn = dayjs().add(15, "second").unix()
+    const expiresIn = dayjs().add(45, "second").unix()
     const generateRefreshToken = await prisma.refreshToken.create({
       data: {
         companyId: companyId,

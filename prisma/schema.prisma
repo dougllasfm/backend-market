@@ -17,6 +17,7 @@ model Users {
   name    String
   telephone String
   address String
+  orders Orders[]
 }
 
 model Companys {
@@ -30,6 +31,7 @@ model Companys {
   hourOpen String
   hourClosed String
   refresh_token RefreshToken?
+  orders Orders[]
 }
 
 model Products {
@@ -39,7 +41,8 @@ model Products {
   quantity String
   weight String
   description String
-  category String
+  category String  
+  orders ProductsOnOrders[]
 }
 
 model RefreshToken {
@@ -47,4 +50,22 @@ model RefreshToken {
   expiresIn Int
   companyId Int
   company Companys @relation(fields: [companyId], references: [id])
+}
+
+model Orders {
+  id Int @id @default(autoincrement())
+  company Companys @relation(fields: [companyId], references: [id])
+  user Users @relation(fields: [userId], references: [id])
+  companyId Int
+  userId Int
+  products ProductsOnOrders[]
+}
+
+model ProductsOnOrders {
+  order       Orders     @relation(fields: [orderId], references: [id])
+  product   Products @relation(fields: [productId], references: [id])
+  orderId     Int // relation scalar field (used in the `@relation` attribute above)
+  productId Int // relation scalar field (used in the `@relation` attribute above)
+
+  @@id([orderId, productId])
 }
