@@ -12,6 +12,7 @@ const createProduct = async function (req: Request, res: Response) {
         weight: req.body.weight,
         category: req.body.category,
         description: req.body.description,
+        companyId: req.body.companyId
       },
     });
 

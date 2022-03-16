@@ -1,27 +1,17 @@
 import express from "express";
-const Companys = express.Router()
-import { authenticateCompanyController } from "../controllers/authenticateCompany/authenticateCompanyController"
-import { refreshTokenCompanyController } from "../controllers/refreshTokenCompany/refreshTokenCompanyController"
-import { createCompany, listCompanys  } from "../controllers/companys"
+const Companys = express.Router();
+import { authenticateCompanyController } from "../controllers/authenticateCompany/authenticateCompanyController";
+import { refreshTokenCompanyController } from "../controllers/refreshTokenCompany/refreshTokenCompanyController";
+import { createCompany, listCompanys, companyData } from "../controllers/companys";
 
-Companys.post(
-  '/createCompany',
-  createCompany
-)
+Companys.post("/createCompany", createCompany);
 
-Companys.get(
-  '/companys',
-  listCompanys
-)
+Companys.get("/companys", listCompanys);
 
-Companys.post(
-  "/authenticate",
-  authenticateCompanyController
-)
+Companys.get("/company", companyData);
 
-Companys.post(
-  "/refresh-token",
-  refreshTokenCompanyController
-)
+Companys.post("/authenticate", authenticateCompanyController);
 
-export { Companys }
+Companys.post("/refresh-token", refreshTokenCompanyController);
+
+export { Companys };

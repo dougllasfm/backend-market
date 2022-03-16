@@ -58,6 +58,9 @@ type OrderProps = {
 const listOrders = async function (req: Request, res: Response) {
   try {
     const listOrders = await prisma.orders.findMany({
+      where: {
+        companyId: req.body.companyId
+      },
       include: {
         products: {
           include: {

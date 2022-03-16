@@ -38,4 +38,18 @@ const listCompanys = async function (req: Request, res: Response) {
   }
 };
 
-export { createCompany, listCompanys };
+const companyData = async function(req: Request, res: Response) {
+  try {
+    const dataCompany = await prisma.companys.findFirst({
+      where: { id: req.body.id }, include: {
+        products: true
+      }
+    })
+
+    res.status(200).json(dataCompany)
+  } catch (error) {
+    res.status(400).send({ error});
+  }
+}
+
+export { createCompany, listCompanys, companyData };

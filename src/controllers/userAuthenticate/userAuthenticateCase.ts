@@ -32,8 +32,8 @@ const userAuthenticateCase = async function ({ email, password }: Props) {
 
     // gerar token do usuario
     const token = await generateTokenProvider(userAlreadyExists.id)
-
-    return { token }
+    
+    return { token, userAlreadyExists }
   } catch (error) {
     console.log(error)
   }

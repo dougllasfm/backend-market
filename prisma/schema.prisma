@@ -11,60 +11,63 @@ datasource db {
 }
 
 model Users {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  password String
-  name    String
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
   telephone String
-  address String
-  orders Orders[]
+  address   String
+  orders    Orders[]
 }
 
 model Companys {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  password String
-  name String
-  address String
-  taxMinimum String
-  buyMinimum String
-  hourOpen String
-  hourClosed String
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
+  password      String
+  name          String
+  address       String
+  taxMinimum    String
+  buyMinimum    String
+  hourOpen      String
+  hourClosed    String
   refresh_token RefreshToken?
-  orders Orders[]
+  orders        Orders[]
+  products      Products[]
 }
 
 model Products {
-  id Int @id @default(autoincrement())
-  name String
-  price String
-  quantity String
-  weight String
+  id          Int                @id @default(autoincrement())
+  name        String
+  price       String
+  quantity    String
+  weight      String
   description String
-  category String  
-  orders ProductsOnOrders[]
+  category    String
+  orders      ProductsOnOrders[]
+  company     Companys           @relation(fields: [companyId], references: [id])
+  companyId   Int                
 }
 
 model RefreshToken {
-  id String @id @default(uuid())
+  id        String   @id @default(uuid())
   expiresIn Int
-  companyId Int
-  company Companys @relation(fields: [companyId], references: [id])
+  companyId Int      @unique
+  company   Companys @relation(fields: [companyId], references: [id])
 }
 
 model Orders {
-  id Int @id @default(autoincrement())
-  company Companys @relation(fields: [companyId], references: [id])
-  user Users @relation(fields: [userId], references: [id])
+  id        Int                @id @default(autoincrement())
+  company   Companys           @relation(fields: [companyId], references: [id])
+  user      Users              @relation(fields: [userId], references: [id])
   companyId Int
-  userId Int
-  products ProductsOnOrders[]
+  userId    Int
+  products  ProductsOnOrders[]
 }
 
 model ProductsOnOrders {
-  order       Orders     @relation(fields: [orderId], references: [id])
+  order     Orders   @relation(fields: [orderId], references: [id])
   product   Products @relation(fields: [productId], references: [id])
-  orderId     Int // relation scalar field (used in the `@relation` attribute above)
+  orderId   Int // relation scalar field (used in the `@relation` attribute above)
   productId Int // relation scalar field (used in the `@relation` attribute above)
 
   @@id([orderId, productId])
