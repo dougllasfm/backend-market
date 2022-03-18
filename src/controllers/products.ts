@@ -33,18 +33,4 @@ const listProducts = async function(req: Request, res: Response) {
   }
 }
 
-const listProductsCategory = async function(req: Request, res: Response) {
-  try {
-    const result = await prisma.products.findMany({
-      where: {
-        category: req.body.category
-      }
-    })
-
-    res.status(200).json(result)
-  } catch (error) {
-    res.status(400).send({ error });
-  }
-}
-
-export { createProduct, listProducts, listProductsCategory };
+export { createProduct, listProducts };

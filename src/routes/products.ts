@@ -1,15 +1,12 @@
 import express from "express";
-const Products = express.Router();
 import {
   createProduct,
-  listProducts,
-  listProductsCategory,
+  listProducts
 } from "../controllers/products";
+const Products = express.Router();
 
 Products.post("/createProduct", createProduct);
 
 Products.get("/products", listProducts);
-
-Products.get("/productsCategory", listProductsCategory);
 
 export { Products };

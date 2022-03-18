@@ -58,7 +58,7 @@ const companyFilter = async function (req: Request, res: Response) {
     const dataCompany = await prisma.companys.findMany({
       where: {
         name: {
-          contains: req.body.name,
+          contains: req.query.search as string,
         },
       },
       include: {
