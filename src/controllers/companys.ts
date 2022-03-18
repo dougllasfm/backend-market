@@ -24,7 +24,7 @@ const createCompany = async function (req: Request, res: Response) {
     res.status(200).json(company);
   } catch (error) {
     console.log(error);
-    res.status(400).send({ error: error });
+    res.status(400).send({ error });
   }
 };
 
@@ -34,22 +34,42 @@ const listCompanys = async function (req: Request, res: Response) {
 
     res.status(200).json(result);
   } catch (error) {
-    res.status(400).send({ error: "erro" });
+    res.status(400).send({ error });
   }
 };
 
-const companyData = async function(req: Request, res: Response) {
+const companyData = async function (req: Request, res: Response) {
   try {
     const dataCompany = await prisma.companys.findFirst({
-      where: { id: req.body.id }, include: {
-        products: true
-      }
-    })
+      where: { id: req.body.id },
+      include: {
+        products: true,
+      },
+    });
 
-    res.status(200).json(dataCompany)
+    res.status(200).json(dataCompany);
   } catch (error) {
-    res.status(400).send({ error});
+    res.status(400).send({ error });
   }
-}
+};
 
-export { createCompany, listCompanys, companyData };
+const companyFilter = async function (req: Request, res: Response) {
+  try {
+    const dataCompany = await prisma.companys.findMany({
+      where: {
+        name: {
+          contains: req.body.name,
+        },
+      },
+      include: {
+        products: true,
+      },
+    });
+
+    res.status(200).json(dataCompany);
+  } catch (error) {
+    res.status(400).send({ error });
+  }
+};
+
+export { createCompany, listCompanys, companyData, companyFilter };

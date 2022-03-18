@@ -31,14 +31,17 @@ const createOrder = async function (req: Request, res: Response) {
 
 const listOrdersUser = async function (req: Request, res: Response) {
   try {
+    const number = parseInt(req.query.userId as string)
     const listOrders = await prisma.orders.findMany({
-      where: { userId: req.body.userId },
+      where: { userId: number},
       include: {
         products: {
           include: {
-            product: true,
+            product: true
           },
         },
+        user: true,
+        company: true,
       },
     });
     res.status(200).json(listOrders);

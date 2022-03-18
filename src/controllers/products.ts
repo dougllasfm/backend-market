@@ -19,7 +19,7 @@ const createProduct = async function (req: Request, res: Response) {
     res.status(200).json(product);
   } catch (error) {
     console.log(error)
-    res.status(400).send({ error: error });
+    res.status(400).send({ error });
   }
 };
 
@@ -29,8 +29,22 @@ const listProducts = async function(req: Request, res: Response) {
 
     res.status(200).json(result)
   } catch (error) {
-    res.status(400).send({ error: "erro" });
+    res.status(400).send({ error });
   }
 }
 
-export { createProduct, listProducts };
+const listProductsCategory = async function(req: Request, res: Response) {
+  try {
+    const result = await prisma.products.findMany({
+      where: {
+        category: req.body.category
+      }
+    })
+
+    res.status(200).json(result)
+  } catch (error) {
+    res.status(400).send({ error });
+  }
+}
+
+export { createProduct, listProducts, listProductsCategory };

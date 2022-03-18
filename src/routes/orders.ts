@@ -1,20 +1,11 @@
 import express from "express";
-const Orders = express.Router()
-import { createOrder, listOrdersUser, listOrders } from "../controllers/orders"
+const Orders = express.Router();
+import { createOrder, listOrdersUser, listOrders } from "../controllers/orders";
 
-Orders.post(
-  '/createOrder',
-  createOrder
-)
+Orders.post("/createOrder", createOrder);
 
-Orders.get(
-  "/ordersUser",
-  listOrdersUser
-)
+Orders.get("/orderUser", listOrdersUser);
 
-Orders.get(
-  "/orders",
-  listOrders
-)
+Orders.get("/orders", listOrders);
 
-export { Orders }
+export { Orders };
