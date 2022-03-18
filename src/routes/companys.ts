@@ -1,8 +1,7 @@
 import express from "express";
-const Companys = express.Router();
 import { authenticateCompanyController } from "../controllers/authenticateCompany/authenticateCompanyController";
-import { refreshTokenCompanyController } from "../controllers/refreshTokenCompany/refreshTokenCompanyController";
-import { createCompany, listCompanys, companyData, companyFilter } from "../controllers/companys";
+import { companyData, companyFilter, createCompany, listCompanys } from "../controllers/companys";
+const Companys = express.Router();
 
 Companys.post("/createCompany", createCompany);
 
@@ -13,7 +12,5 @@ Companys.get("/company", companyData);
 Companys.get("/companyFilter", companyFilter);
 
 Companys.post("/authenticate", authenticateCompanyController);
-
-Companys.post("/refresh-token", refreshTokenCompanyController);
 
 export { Companys };

@@ -6,6 +6,8 @@ CREATE TABLE "Users" (
     "name" TEXT NOT NULL,
     "telephone" TEXT NOT NULL,
     "address" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Users_pkey" PRIMARY KEY ("id")
 );
@@ -21,6 +23,8 @@ CREATE TABLE "Companys" (
     "buyMinimum" TEXT NOT NULL,
     "hourOpen" TEXT NOT NULL,
     "hourClosed" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Companys_pkey" PRIMARY KEY ("id")
 );
@@ -30,22 +34,15 @@ CREATE TABLE "Products" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "price" TEXT NOT NULL,
-    "quantity" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
     "weight" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "companyId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Products_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "RefreshToken" (
-    "id" TEXT NOT NULL,
-    "expiresIn" INTEGER NOT NULL,
-    "companyId" INTEGER NOT NULL,
-
-    CONSTRAINT "RefreshToken_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -53,6 +50,8 @@ CREATE TABLE "Orders" (
     "id" SERIAL NOT NULL,
     "companyId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Orders_pkey" PRIMARY KEY ("id")
 );
@@ -61,6 +60,8 @@ CREATE TABLE "Orders" (
 CREATE TABLE "ProductsOnOrders" (
     "orderId" INTEGER NOT NULL,
     "productId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ProductsOnOrders_pkey" PRIMARY KEY ("orderId","productId")
 );
@@ -71,14 +72,8 @@ CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "Companys_email_key" ON "Companys"("email");
 
--- CreateIndex
-CREATE UNIQUE INDEX "RefreshToken_companyId_key" ON "RefreshToken"("companyId");
-
 -- AddForeignKey
 ALTER TABLE "Products" ADD CONSTRAINT "Products_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Companys"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "RefreshToken" ADD CONSTRAINT "RefreshToken_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Companys"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Orders" ADD CONSTRAINT "Orders_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

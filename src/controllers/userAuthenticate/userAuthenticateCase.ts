@@ -1,6 +1,5 @@
-import { generateRefreshToken } from 'src/provider/generateRefreshToken';
-import { compare } from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
+import { compare } from "bcryptjs";
 import { generateTokenProvider } from 'src/provider/generateTokenProvider';
 const prisma = new PrismaClient();
 
@@ -39,4 +38,4 @@ const userAuthenticateCase = async function ({ email, password }: Props) {
   }
 };
 
-export { userAuthenticateCase }
+export { userAuthenticateCase };

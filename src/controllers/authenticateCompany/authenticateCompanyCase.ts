@@ -1,6 +1,6 @@
-import { generateRefreshToken } from 'src/provider/generateRefreshToken';
-import { compare } from "bcryptjs";
+
 import { PrismaClient } from "@prisma/client";
+import { compare } from "bcryptjs";
 import { generateTokenProvider } from 'src/provider/generateTokenProvider';
 const prisma = new PrismaClient();
 
@@ -32,18 +32,11 @@ const authenticateCompany = async function ({ email, password }: Props) {
 
     // gerar token da empresa
     const token = await generateTokenProvider(companyAlreadyExists.id)
-    
-    await prisma.refreshToken.deleteMany({
-      where: {
-        companyId: companyAlreadyExists.id
-      }
-    })
-    const refreshToken = await generateRefreshToken(companyAlreadyExists.id)
 
-    return { token, refreshToken }
+    return { token, companyAlreadyExists }
   } catch (error) {
     console.log(error)
   }
 };
 
-export { authenticateCompany }
+export { authenticateCompany };

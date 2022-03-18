@@ -18,6 +18,8 @@ model Users {
   telephone String
   address   String
   orders    Orders[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
 
 model Companys {
@@ -30,29 +32,25 @@ model Companys {
   buyMinimum    String
   hourOpen      String
   hourClosed    String
-  refresh_token RefreshToken?
   orders        Orders[]
   products      Products[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
 
 model Products {
   id          Int                @id @default(autoincrement())
   name        String
   price       String
-  quantity    String
+  quantity    Int
   weight      String
   description String
   category    String
   orders      ProductsOnOrders[]
   company     Companys           @relation(fields: [companyId], references: [id])
-  companyId   Int                
-}
-
-model RefreshToken {
-  id        String   @id @default(uuid())
-  expiresIn Int
-  companyId Int      @unique
-  company   Companys @relation(fields: [companyId], references: [id])
+  companyId   Int              
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt  
 }
 
 model Orders {
@@ -62,6 +60,8 @@ model Orders {
   companyId Int
   userId    Int
   products  ProductsOnOrders[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
 
 model ProductsOnOrders {
@@ -69,6 +69,8 @@ model ProductsOnOrders {
   product   Products @relation(fields: [productId], references: [id])
   orderId   Int // relation scalar field (used in the `@relation` attribute above)
   productId Int // relation scalar field (used in the `@relation` attribute above)
-
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  
   @@id([orderId, productId])
 }
